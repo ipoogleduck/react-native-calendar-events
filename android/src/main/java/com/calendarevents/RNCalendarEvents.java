@@ -1083,8 +1083,8 @@ public class RNCalendarEvents extends ReactContextBaseJavaModule implements Perm
             SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'");
 
             if (recurrenceRules.length > 0 && recurrenceRules[0].split("=").length > 1) {
-                event.putString(toLowerCase("recurrence", recurrenceRules[0].split("=")[1]));
-                recurrenceRule.putString(toLowerCase("frequency", recurrenceRules[0].split("=")[1]));
+                event.putString("recurrence", recurrenceRules[0].split("=")[1].toLowerCase());
+                recurrenceRule.putString("frequency", recurrenceRules[0].split("=")[1].toLowerCase());
             }
 
             int durationIndex = cursor.getColumnIndex(CalendarContract.Events.DURATION);
