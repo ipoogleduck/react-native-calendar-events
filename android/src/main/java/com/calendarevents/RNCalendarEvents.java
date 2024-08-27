@@ -1113,8 +1113,20 @@ public class RNCalendarEvents extends ReactContextBaseJavaModule implements Perm
         }
 
         event.putString("id", cursor.getString(0));
-        event.putMap("calendar", findCalendarById(cursor.getString(cursor.getColumnIndex("calendar_id"))));
-        event.putString("title", cursor.getString(cursor.getColumnIndex("title")));
+        int calendarIdIndex = cursor.getColumnIndex("calendar_id");
+        if (calendarIdIndex != -1) {
+            String calendarId = cursor.getString(calendarIdIndex);
+            if (calendarId != null) {
+                event.putMap("calendar", findCalendarById(calendarId));
+            }
+        }
+        int titleIndex = cursor.getColumnIndex("title");
+        if (titleIndex != -1) {
+            String title = cursor.getString(titleIndex);
+            if (title != null) {
+                event.putString("title", title);
+            }
+        }
         event.putString("description", cursor.getString(2));
         event.putString("startDate", startDateUTC);
         event.putString("endDate", endDateUTC);
