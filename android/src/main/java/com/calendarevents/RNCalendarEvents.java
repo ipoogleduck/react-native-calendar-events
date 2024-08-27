@@ -1083,12 +1083,13 @@ public class RNCalendarEvents extends ReactContextBaseJavaModule implements Perm
             SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'");
 
             if (recurrenceRules.length > 0 && recurrenceRules[0].split("=").length > 1) {
-                event.putString("recurrence", recurrenceRules[0].split("=")[1].toLowerCase());
-                recurrenceRule.putString("frequency", recurrenceRules[0].split("=")[1].toLowerCase());
+                event.putString(toLowerCase("recurrence", recurrenceRules[0].split("=")[1]));
+                recurrenceRule.putString(toLowerCase("frequency", recurrenceRules[0].split("=")[1]));
             }
 
-            if (cursor.getColumnIndex(CalendarContract.Events.DURATION) != -1 && cursor.getString(cursor.getColumnIndex(CalendarContract.Events.DURATION)) != null) {
-                recurrenceRule.putString("duration", cursor.getString(cursor.getColumnIndex(CalendarContract.Events.DURATION)));
+            int durationIndex = cursor.getColumnIndex(CalendarContract.Events.DURATION);
+            if (durationIndex != -1 && cursor.getString(durationIndex) != null) {
+                recurrenceRule.putString("duration", cursor.getString(durationIndex));
             }
 
             if (recurrenceRules.length >= 2 && recurrenceRules[1].split("=")[0].equals("INTERVAL")) {
@@ -1129,12 +1130,14 @@ public class RNCalendarEvents extends ReactContextBaseJavaModule implements Perm
             event.putArray("alarms", emptyAlarms);
         }
 
-        if (cursor.getColumnIndex(CalendarContract.Events.ORIGINAL_ID) != -1 && cursor.getString(cursor.getColumnIndex(CalendarContract.Events.ORIGINAL_ID)) != null) {
-            event.putString("originalId", cursor.getString(cursor.getColumnIndex(CalendarContract.Events.ORIGINAL_ID)));
+        int originalIdIndex = cursor.getColumnIndex(CalendarContract.Events.ORIGINAL_ID);
+        if (originalIdIndex != -1 && cursor.getString(originalIdIndex) != null) {
+            event.putString("originalId", cursor.getString(originalIdIndex));
         }
 
-        if (cursor.getColumnIndex(CalendarContract.Instances.ORIGINAL_SYNC_ID) != -1 && cursor.getString(cursor.getColumnIndex(CalendarContract.Instances.ORIGINAL_SYNC_ID)) != null) {
-            event.putString("syncId", cursor.getString(cursor.getColumnIndex(CalendarContract.Instances.ORIGINAL_SYNC_ID)));
+        int originalSyncIdIndex = cursor.getColumnIndex(CalendarContract.Instances.ORIGINAL_SYNC_ID);
+        if (originalSyncIdIndex != -1 && cursor.getString(originalSyncIdIndex) != null) {
+            event.putString("syncId", cursor.getString(originalSyncIdIndex));
         }
 
         return event;
